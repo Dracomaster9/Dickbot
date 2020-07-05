@@ -1,2 +1,2 @@
 # DickJS
- Dave && Nick JS game
+ Dave && Nick Discord bot
