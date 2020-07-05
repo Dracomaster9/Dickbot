@@ -1,6 +1,9 @@
 //Discord Connection
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+const { Client, MessageAttachment } = require('discord.js');
+const client = new Client();
+
 
 const discordKey = "NzI5MjE5MDczNzE5OTI2Nzg1.XwF1CQ.-jOd7SXLO7uDPJcm0jLOeJROq7w";
 
@@ -27,13 +30,25 @@ bot.on('message', message => {
   };
 });
 
+client.on('message', message => {
+    // If the message is '!rip'
+    if (message.content === '!kiss') {
+      // Create the attachment using MessageAttachment
+      const attachment = new MessageAttachment('./kiss.gif');
+      // Send the attachment in the message channel with a content
+      message.channel.send(`${message.author},`, attachment);
+    }
+  });
 
 //Bot Commands
 bot.on('message', message => {
   if (botActive) {
       switch( message.content ) {
-          case "~whatdoyoudo": 
+          case "!whatdoyoudo": 
               message.channel.send("All sorts of things! Well, mostly just listen in like an NSA agent, but i have some cool functionalities underway. One example is talking with dimwits on the server like you.")
+              break;
+          case "!kiss":
+              message.channel.send("I kiss");
               break;
         };
     };
