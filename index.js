@@ -29,7 +29,7 @@ bot.on('message', message => {
       };
   };
 });
-
+/*attempt at recreating Yui bot's "kiss" command to practice commands with multiple mentions*/
 client.on('message', message => {
     // If the message is '!rip'
     if (message.content === '!kiss') {
