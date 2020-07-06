@@ -33,17 +33,7 @@ bot.on('message', message => {
   };
 });
 
-client.on('message', message => {
-    // If the message is '!rip'
-    if (message.content === '!kiss') {
-      // Create the attachment using MessageAttachment
-      const attachment = new MessageAttachment('./kiss.gif');
-      // Send the attachment in the message channel with a content
-      message.channel.send(`${message.author},`, attachment);
-    }
-  });
-
-//Bot Commands
+//general command switch
 bot.on('message', message => {
   if (botActive) {
       switch( message.content ) {
@@ -51,4 +41,40 @@ bot.on('message', message => {
               message.channel.send("All sorts of things! Well, mostly just listen in like an NSA agent, but i have some cool functionalities underway. One example is talking with dimwits on the server like you.");
         };
     };
-});
+  });
+
+  //Ban and Kick Commands courtesy of https://stackoverflow.com/a/54892548
+  //if the message starts with "!kick"
+  if (message.content.startsWith("!kick")) {
+    //if the message comes from an admin role
+    if (!message.member.roles.find("Owner", "Admin"))
+      return;
+  // Easy way to get member object though mentions.
+  var member = message.mentions.members.first();
+  // Kick
+  member.kick().then((member) => {
+      // Successmessage
+      message.channel.send(":wave: " + member.displayName + " has been smashed. ");
+  }).catch(() => {
+      // Failmessage
+      message.channel.send("Access Denied");
+  });
+};
+
+client.on("message", (message) => {
+  if (message.content.startsWith("!ban")) {
+
+      if (!message.member.roles.find("Owner", "Admin"))
+          return;
+      // Easy way to get member object though mentions.
+      var member = message.mentions.members.first();
+      // ban
+      member.ban().then((member) => {
+          // Successmessage
+          message.channel.send(":wave: " + member.displayName + " has been wobbled.");
+      }).catch(() => {
+          // Failmessage
+          message.channel.send("Access Denied");
+      });
+}});
+
