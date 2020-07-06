@@ -13,7 +13,7 @@ var botActive = false;
 //Bot Start Up
 bot.on('message', message => {
   if(message.member.roles.some(r=>["Admin", "Owner"].includes(r.name)) ) {
-      if ( message.content == "!Start" ) {
+      if ( message.content == "!start" ) {
           if ( botActive ) {
               message.channel.send("I'm Awake!");
           } else if ( !botActive ) {
@@ -77,4 +77,4 @@ bot.on("message", (message) => {
       });
 }});
 
-bot.login('discordKey');
+bot.login(discordKey);
