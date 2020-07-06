@@ -8,7 +8,7 @@ bot.on('error', (e) => console.error(e));
 bot.on('warning', (e) => console.warn(e));
 bot.on('debug', (e) => console.info(e));
 
-const discordKey = "NzI5MjE5MDczNzE5OTI2Nzg1.XwF1CQ.-jOd7SXLO7uDPJcm0jLOeJROq7w";
+const discordKey = "";
 
 var botActive = false;
 
