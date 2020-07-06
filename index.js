@@ -4,6 +4,9 @@ const bot = new Discord.Client();
 const { Client, MessageAttachment } = require('discord.js');
 const client = new Client();
 
+bot.on('error', (e) => console.error(e));
+bot.on('warning', (e) => console.warn(e));
+bot.on('debug', (e) => console.info(e));
 
 const discordKey = "NzI5MjE5MDczNzE5OTI2Nzg1.XwF1CQ.-jOd7SXLO7uDPJcm0jLOeJROq7w";
 
@@ -29,7 +32,7 @@ bot.on('message', message => {
       };
   };
 });
-/*attempt at recreating Yui bot's "kiss" command to practice commands with multiple mentions*/
+
 client.on('message', message => {
     // If the message is '!rip'
     if (message.content === '!kiss') {
@@ -45,11 +48,7 @@ bot.on('message', message => {
   if (botActive) {
       switch( message.content ) {
           case "!whatdoyoudo": 
-              message.channel.send("All sorts of things! Well, mostly just listen in like an NSA agent, but i have some cool functionalities underway. One example is talking with dimwits on the server like you.")
-              break;
-          case "!kiss":
-              message.channel.send("I kiss");
-              break;
+              message.channel.send("All sorts of things! Well, mostly just listen in like an NSA agent, but i have some cool functionalities underway. One example is talking with dimwits on the server like you.");
         };
     };
 });
