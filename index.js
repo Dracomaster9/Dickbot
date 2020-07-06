@@ -2,13 +2,11 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 const { Client, MessageAttachment } = require('discord.js');
-const client = new Client();
+const discordKey = "";
 
 bot.on('error', (e) => console.error(e));
 bot.on('warning', (e) => console.warn(e));
 bot.on('debug', (e) => console.info(e));
-
-const discordKey = "";
 
 var botActive = false;
 
@@ -45,6 +43,7 @@ bot.on('message', message => {
 
   //Ban and Kick Commands courtesy of https://stackoverflow.com/a/54892548
   //if the message starts with "!kick"
+ bot.on("message", (message) => {
   if (message.content.startsWith("!kick")) {
     //if the message comes from an admin role
     if (!message.member.roles.find("Owner", "Admin"))
@@ -59,9 +58,9 @@ bot.on('message', message => {
       // Failmessage
       message.channel.send("Access Denied");
   });
-};
+}});
 
-client.on("message", (message) => {
+bot.on("message", (message) => {
   if (message.content.startsWith("!ban")) {
 
       if (!message.member.roles.find("Owner", "Admin"))
@@ -78,3 +77,4 @@ client.on("message", (message) => {
       });
 }});
 
+bot.login('discordKey');
