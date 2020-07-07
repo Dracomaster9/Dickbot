@@ -9,18 +9,19 @@ bot.on('warning', (e) => console.warn(e));
 bot.on('debug', (e) => console.info(e));
 
 var botActive = false;
+var prefix = "!";
 
 //Bot Start Up
 bot.on('message', message => {
   if(message.member.roles.some(r=>["Admin", "Owner"].includes(r.name)) ) {
-      if ( message.content == "!start" ) {
+      if ( message.content == (prefix + "start")) {
           if ( botActive ) {
               message.channel.send("I'm Awake!");
           } else if ( !botActive ) {
             botActive = true;
             message.channel.send("Don't you fucking test me boy");
           };
-      } else if ( message.content == "!stop" ) {
+      } else if ( message.content == (prefix + "stop")) {
           if ( botActive ) {
               botActive = false;
               message.channel.send("Going To Sleep");
@@ -35,46 +36,47 @@ bot.on('message', message => {
 bot.on('message', message => {
   if (botActive) {
       switch( message.content ) {
-          case "!whatdoyoudo": 
+          case (prefix + "whatdoyoudo"): 
               message.channel.send("All sorts of things! Well, mostly just listen in like an NSA agent, but i have some cool functionalities underway. One example is talking with dimwits on the server like you.");
         };
     };
   });
 
-  //Ban and Kick Commands courtesy of https://stackoverflow.com/a/54892548
-  //if the message starts with "!kick"
- bot.on("message", (message) => {
-  if (message.content.startsWith("!kick")) {
-    //if the message comes from an admin role
-    if (!message.member.roles.find("Owner", "Admin"))
-      return;
-  // Easy way to get member object though mentions.
-  var member = message.mentions.members.first();
-  // Kick
-  member.kick().then((member) => {
-      // Successmessage
-      message.channel.send(":wave: " + member.displayName + " has been smashed. ");
-  }).catch(() => {
-      // Failmessage
-      message.channel.send("Access Denied");
-  });
+//kick command
+bot.on('message', (message) => {
+    if (message.content.startsWith(prefix + "kick"))
+        if (message.member.hasPermission("KICK_MEMBERS")) {
+            try {msg.members.mention.first().kick()}
+            catch {msg.reply("I don't have the guts to kick" + msg.members.mentions.first() + "They're too badass")}}
+        else ("You can't kick" + message.members.mention.first() + "because you aren't cool enough")});
+//ban command
+bot.on('message', (message) => {
+    if (message.content.startsWith(prefix + "kick"))
+        if (message.member.hasPermission("BAN_MEMBERS")) {
+            try {msg.members.mention.first().ban()}
+            catch {msg.reply("I don't have the guts to ban" + msg.members.mentions.first() + "They're too badass")}}
+        else ("You can't ban" + message.members.mention.first() + "because you aren't cool enough")});
+//prune
+bot.on('message', (message) => {
+    if (message.content.startsWith(prefix + "prune")) {
+        const amount = parseInt(args[0]);
+        if (isNaN(amount)) {
+            return message.reply('that doesn\'t seem to be a valid number.');
+} else if (amount < 2 || amount > 100) {
+	return message.reply('you need to input a number between 2 and 100.');
+}
+ else (message.channel.bulkDelete(amount));       
 }});
 
-bot.on("message", (message) => {
-  if (message.content.startsWith("!ban")) {
-
-      if (!message.member.roles.find("Owner", "Admin"))
-          return;
-      // Easy way to get member object though mentions.
-      var member = message.mentions.members.first();
-      // ban
-      member.ban().then((member) => {
-          // Successmessage
-          message.channel.send(":wave: " + member.displayName + " has been wobbled.");
-      }).catch(() => {
-          // Failmessage
-          message.channel.send("Access Denied");
-      });
-}});
+//generate youtube search links
+bot.on ('message', (message) => {
+    if (message.content.startsWith(prefix + "youtube")) {
+        const args = message.content.slice(prefix.length).split(' ');
+        const command = args.shift().toLowerCase();
+        var replaced = str.split(' ').join('+');
+        if (!args.length)
+            message.channel.send ('You did not provide a search query')
+        else (message.channel.send('https://www.youtube.com/results?search_query=' + replaced));
+        }});
 
 bot.login(discordKey);
